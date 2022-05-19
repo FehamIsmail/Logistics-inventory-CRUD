@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/.idea/
+/node_modules/
+# Editor-based HTTP Client requests
+/httpRequests/
+/crud-node.iml
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
