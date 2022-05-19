@@ -2,6 +2,9 @@
 /shelf/
 /.idea/
 /node_modules/
+/.env
+/logistics-react/node_modules/
+/logistics-react/logistics-react.iml
 # Editor-based HTTP Client requests
 /httpRequests/
 /crud-node.iml
