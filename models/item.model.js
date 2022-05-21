@@ -7,7 +7,6 @@ const itemSchema = new Schema({
     name: {
         type: String,
         required: true,
-        trim: true,
         minlength: 3
     },
     description:{
@@ -17,26 +16,38 @@ const itemSchema = new Schema({
     quantity: {
         type: Number,
         required: true,
-        min: 0
+        min: 1
     },
     weight: {
         type: Number,
         required: true,
         min: 0.01
     },
+    size: {
+        type: String,
+        enum: [
+            'Extra Small',
+            'Small',
+            'Medium',
+            'Large',
+            'Extra Large',
+        ],
+        required: true,
+        default: ['Medium']
+    },
     status: {
         type: String,
         enum: [
-            'Order filed',
-            'In transit',
-            'Item delivered',
-            'Shipment delayed',
-            'Undeliverable. Item lost',
-            'Undeliverable. Item damaged',
-            'Undeliverable. Item seized'
+            'Order Filed',
+            'In Transit',
+            'Item Delivered',
+            'Shipment Delayed',
+            'Undeliverable. Item Lost',
+            'Undeliverable. Item Damaged',
+            'Undeliverable. Item Seized'
             ],
         required: true,
-        default: ['ORDER FILED']
+        default: ['Order Filed']
     }
 }, {
     timestamps: true,

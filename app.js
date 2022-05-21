@@ -22,6 +22,6 @@ app.use(express.json())
 app.use('/items', itemsRouter)
 
 app.get('/', function (req, res) {
-    res.render('index.ejs')
+
 })
 

@@ -1,12 +1,13 @@
 const router = require('express').Router();
 let Item = require('../models/item.model');
 
+
+
 //Display all items
 router.get('/', (req, res) => {
     Item.find()
         .then(items => res.json(items))
         .catch(err => res.status(400).json('Error: ' + err))
-
 });
 
 //Get item by ID
@@ -32,6 +33,7 @@ router.put('/:id', (req, res) => {
             description: req.body.description,
             quantity: req.body.quantity,
             weight: req.body.weight,
+            size: req.body.size,
             status: req.body.status,
         },
         { runValidators: true },
@@ -47,8 +49,9 @@ router.post('/add', (req, res) => {
     const description = req.body.description || '';
     const status = req.body.status;
     const weight = req.body.weight;
+    const size = req.body.size;
 
-    const newItem = new Item({name, description, quantity, weight, status})
+    const newItem = new Item({name, description, quantity, weight, size, status})
 
     newItem.save()
         .then(() => res.json('Item added successfully'))
