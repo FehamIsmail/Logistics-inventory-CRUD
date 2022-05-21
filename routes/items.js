@@ -48,12 +48,12 @@ router.post('/add', (req, res) => {
     const status = req.body.status;
     const weight = req.body.weight;
 
-    const newUser = new Item({name, description, quantity, weight, status});
+    const newItem = new Item({name, description, quantity, weight, status})
 
-    newUser.save()
+    newItem.save()
         .then(() => res.json('Item added successfully'))
         .catch(err => res.status(400).json('Error: ' + err));
-});
+})
 
 //Exporting router
 module.exports = router;

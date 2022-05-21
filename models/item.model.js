@@ -26,7 +26,15 @@ const itemSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['ORDER FILED', 'IN TRANSIT', 'DELIVERED'],
+        enum: [
+            'Order filed',
+            'In transit',
+            'Item delivered',
+            'Shipment delayed',
+            'Undeliverable. Item lost',
+            'Undeliverable. Item damaged',
+            'Undeliverable. Item seized'
+            ],
         required: true,
         default: ['ORDER FILED']
     }
