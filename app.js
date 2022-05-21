@@ -1,32 +1,25 @@
 const express = require('express')
 require('dotenv').config()
 const app = express()
-const port = process.env.PORT || 5000;
-const mongoose = require('mongoose');
+const port = process.env.PORT || 5000
+const mongoose = require('mongoose')
 const uri = process.env.ATLAS_URI
+const itemsRouter = require('./routes/items')
 
-const Schema = mongoose.Schema;
-
-const itemSchema = new Schema({
-    name: {
-        type: String,
-        require: true,
-        minlength: 3
-    },
-}, {
-    timestamps: true,
-})
-
+//Connecting to mongoose database
 mongoose.connect(uri, { useNewUrlParser: true})
-
 mongoose.connection.once('open', () => {
     console.log('MongoDB connection: successfully opened')
 })
-app.use(express.json())
 
+//Opening server
 app.listen(port,  () => {
-    console.log("Server open on port " + port);
+    console.log("Server open on port " + port)
 })
+
+//Initializing middlewares
+app.use(express.json())
+app.use('/items', itemsRouter)
 
 app.get('/', function (req, res) {
     res.render('index.ejs')
