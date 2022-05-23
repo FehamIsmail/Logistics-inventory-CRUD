@@ -12,7 +12,7 @@ To create an item simply click on 'Create item' location on top in the navigatio
   <li>Names are required</li>
   <li>Descriptions are optional</li>
   <li>Quantity must be atleast '1'</li>
-  <li>Weight is expressed in kilos and must be atleast 0.01 kg</li>
+  <li>Weight is expressed in kilos and must be atleast '0.01' kg</li>
   <li>Quantity and Weight must be a number</li>
   </ul>
 
