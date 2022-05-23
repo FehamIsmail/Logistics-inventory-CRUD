@@ -9,9 +9,11 @@ To create an item simply click on 'Create item' location on top in the navigatio
 <ul><b>Requirements/Info:</b>
   <br>
   <li>Names must be atleast 3 characters. They can hold letters, numbers, and special characters</li>
+  <li>Names are required</li>
   <li>Descriptions are optional</li>
   <li>Quantity must be atleast '1'</li>
   <li>Weight is expressed in kilos and must be atleast 0.01 kg</li>
+  <li>Quantity and Weight must be a number</li>
   </ul>
 
 <h1>Edit an item</h1>
