@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useParams } from 'react-router-dom';
-import axios from "axios";
+import axios from "../axiosinstance";
 import {useForm} from "react-hook-form";
 
 export default function EditItem(){
@@ -15,7 +15,7 @@ export default function EditItem(){
             }
         }
         console.log(data)
-        axios.put('http://localhost:5000/items/'+ id, data)
+        axios.put('items/'+ id, data)
             .then(res => {
                 console.log(res.data)
                 window.location = '/'
@@ -26,7 +26,7 @@ export default function EditItem(){
     }
 
     React.useEffect(() => {
-        axios.get('http://localhost:5000/items/' + id)
+        axios.get('items/' + id)
             .then(res => {
                 setItem(res.data)
                 const sizeSelectBox = document.getElementsByTagName('select')[0]

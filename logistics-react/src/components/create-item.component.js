@@ -1,5 +1,5 @@
 import React, {Component, createRef} from "react";
-import axios from "axios";
+import axios from "../axiosinstance";
 
 export default class CreateItem extends Component {
 
@@ -80,7 +80,7 @@ export default class CreateItem extends Component {
             status: this.state.status,
         }
 
-        axios.post('http://localhost:5000/items/add', item)
+        axios.post('items/add', item)
             .then(res => {
                 console.log(res.data)
                 window.location = '/'

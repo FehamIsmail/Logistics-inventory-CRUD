@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../axiosinstance';
 
 const Item = props => (
     <tr>
@@ -27,9 +27,8 @@ export default class ItemsList extends Component {
 
     componentDidMount() {
         //Filling empty array with a list of items from the database
-        axios.get('http://localhost:5000/items/')
+        axios.get('items')
             .then(res => {
-                console.log(res)
                 this.setState({ items: res.data })
             })
             .catch(err => {
@@ -38,7 +37,7 @@ export default class ItemsList extends Component {
     }
 
     deleteItem(id) {
-        axios.delete('http://localhost:5000/items/'+id)
+        axios.delete('items/'+id)
             .then(res => { console.log(res.data)});
 
         window.location = '/'
