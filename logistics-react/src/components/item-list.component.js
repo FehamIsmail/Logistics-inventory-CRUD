@@ -1,51 +1,58 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-// import axios from 'axios';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-// const Item = props => (
-//     <tr>
-//         <td>{props.item.name}</td>
-//         <td>{props.item.description}</td>
-//         <td>{props.item.quantity}</td>
-//         <td>{props.item.date.substring(0,10)}</td>
-//         <td>
-//             <Link to={"/edit/"+props.item._id}>edit</Link> | <a href="#" onClick={() => { props.item(props.item._id) }}>delete</a>
-//         </td>
-//     </tr>
-// )
+const Item = props => (
+    <tr>
+        <td>{props.item.name}</td>
+        <td>{props.item.description}</td>
+        <td>{props.item.quantity}</td>
+        <td>{props.item.weight}</td>
+        <td>{props.item.size}</td>
+        <td>{props.item.status}</td>
+        <td>
+            <Link to={"/edit/"+props.item._id}>edit</Link> | <button onClick={() => { props.deleteItem(props.item._id) }}>delete</button>
+        </td>
+    </tr>
+)
 
 export default class ItemsList extends Component {
-    // constructor(props) {
-    //     super(props);
-    //
-    //     // this.deleteItem = this.deleteItem.bind(this)
-    //     // this.state = {items: []};
-    // }
+    constructor(props) {
+        super(props);
+        this.deleteItem = this.deleteItem.bind(this)
 
-    // componentDidMount() {
-    //     axios.get('http://localhost:3000/items/')
-    //         .then(response => {
-    //             this.setState({ items: response.data })
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // }
-    //
-    // deleteItem(id) {
-    //     axios.delete('http://localhost:3000/items/'+id)
-    //         .then(response => { console.log(response.data)});
-    //
-    //     this.setState({
-    //         exercises: this.state.items.filter(el => el._id !== id)
-    //     })
-    // }
-    //
-    // itemList() {
-    //     return this.state.items.map(currentItem => {
-    //         return <Item exercise={currentItem} deleteExercise={this.deleteItem} key={currentItem._id}/>;
-    //     })
-    // }
+        //Initializing state of items with empty array
+        this.state = {items: []};
+    }
+
+    componentDidMount() {
+        //Filling empty array with a list of items from the database
+        axios.get('http://localhost:5000/items/')
+            .then(res => {
+                console.log(res)
+                this.setState({ items: res.data })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    deleteItem(id) {
+        axios.delete('http://localhost:5000/items/'+id)
+            .then(res => { console.log(res.data)});
+
+        //Filter items
+
+        // this.setState({
+        //     exercises: this.state.items.filter(el => el._id !== id)
+        // })
+    }
+
+    itemList() {
+        return this.state.items.map(item => {
+            return <Item item={item} deleteItem={this.deleteItem} key={item._id}/>;
+        })
+    }
 
     render() {
         return (
@@ -62,7 +69,7 @@ export default class ItemsList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {/*{ this.itemList() }*/}
+                        { this.itemList() }
                     </tbody>
                 </table>
             </div>

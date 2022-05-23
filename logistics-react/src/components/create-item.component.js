@@ -1,7 +1,6 @@
 import React, {Component, createRef} from "react";
 import axios from "axios";
 
-
 export default class CreateItem extends Component {
 
     constructor(props){
@@ -14,11 +13,13 @@ export default class CreateItem extends Component {
         this.state = {
             name: '',
             description: '',
-            quantity: 0,
-            weight: 0,
+            quantity: '',
+            weight: '',
             size: 'Medium',
             status: 'Order Filed',
+            error: '',
         }
+
     }
 
     bindOnChangeValues(){
@@ -45,7 +46,7 @@ export default class CreateItem extends Component {
 
     onChangeQuantity(e){
         this.setState({
-            name: e.target.value
+            quantity: e.target.value
         })
     }
 
@@ -67,24 +68,32 @@ export default class CreateItem extends Component {
         })
     }
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault();
 
         const item = {
-            item: this.state.name,
+            name: this.state.name,
             description: this.state.description,
-            quantity: this.state.quantity,
-            weight: this.state.weight,
+            quantity: Number.parseInt(this.state.quantity),
+            weight: Number.parseInt(this.state.weight),
             size: this.state.size,
             status: this.state.status,
         }
 
-        console.log(item)
-
-        axios.post('/items/add', item)
-            .then(res => console.log(res.data))
-
-        window.location = '/'
+        axios.post('http://localhost:5000/items/add', item)
+            .then(res => {
+                console.log(res.data)
+                window.location = '/'
+            })
+            .catch(err => {
+                if (err.response.data) {
+                    console.log(err.response.data)
+                    this.setState({error: err.response.data})
+                } else if (err.message) {
+                    console.log(err.message)
+                    this.setState({error: err.message + '. Please try again later.'})
+                }
+            })
     }
 
     render() {
@@ -94,37 +103,37 @@ export default class CreateItem extends Component {
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group mb-3">
                         <label>Name: </label>
-                        <input  type="text" className="form-control" minLength="3"
-                                value={this.state.username}
+                        <input  type="text" className="form-control" minLength="3" required
+                                value={this.state.name}
                                 onChange={this.onChangeName}
                         />
                     </div>
                     <div className="form-group mb-3">
                         <label>Description: </label>
-                        <input  type="text" className="form-control"
+                        <input  type="text" className="form-control" required
                                 value={this.state.description}
                                 onChange={this.onChangeDescription}
                         />
                     </div>
                     <div className="form-group mb-3">
                         <label>Quantity: </label>
-                        <input  type="number" className="form-control" min="1"
-                                value={this.state.duration}
+                        <input  type="number" className="form-control" min="1" required
+                                value={this.state.quantity}
                                 onChange={this.onChangeQuantity}
                         />
                     </div>
                     <div className="form-group mb-3">
                         <label>Weight (in kg): </label>
-                        <input  type="number" className="form-control" min="0.01" step="0.01"
-                                value={this.state.duration}
+                        <input  type="number" className="form-control" min="0.01" step="0.01" required
+                                value={this.state.weight}
                                 onChange={this.onChangeWeight}
                         />
                     </div>
                     <div className="form-group mb-3">
                         <label>Size: </label>
-                        <select ref={this.sizeRef} className="form-control" id="size-box"
-                                value={this.state.duration}
-                                onChange={this.onChangeWeight}>
+                        <select ref={this.sizeRef} className="form-control" id="size-box" required
+                                value={this.state.size}
+                                onChange={this.onChangeSize}>
                                 <option value="Extra Small">Extra Small</option>
                                 <option value="Small">Small</option>
                                 <option defaultValue value="Medium">Medium</option>
@@ -133,10 +142,10 @@ export default class CreateItem extends Component {
                         </select>
                     </div>
                     <div className="form-group mb-3">
-                        <label>Weight (in kg): </label>
-                        <select ref={this.statusRef} className="form-control" id="size-box"
-                                value={this.state.duration}
-                                onChange={this.onChangeWeight}>
+                        <label>Status: </label>
+                        <select ref={this.statusRef} className="form-control" id="size-box" required
+                                value={this.state.status}
+                                onChange={this.onChangeStatus}>
                             <option defaultValue value="Order Filed">Order Filed</option>
                             <option value="In Transit">In Transit</option>
                             <option value="Item Delivered">Item Delivered</option>
@@ -149,6 +158,7 @@ export default class CreateItem extends Component {
                     <div className="form-group">
                         <input type="submit" value="Create Item" className="btn btn-primary" />
                     </div>
+                    {this.state.error ? <div className="alert alert-warning alert-dismissible fade show mt-4">{this.state.error}</div> : ''}
                 </form>
             </div>
         )

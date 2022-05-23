@@ -1,7 +1,5 @@
 const router = require('express').Router();
-let Item = require('../models/item.model');
-
-
+const Item = require('../models/item.model');
 
 //Display all items
 router.get('/', (req, res) => {
@@ -51,11 +49,19 @@ router.post('/add', (req, res) => {
     const weight = req.body.weight;
     const size = req.body.size;
 
-    const newItem = new Item({name, description, quantity, weight, size, status})
+    const newItemJSON = {name, description, quantity, weight, size, status}
 
-    newItem.save()
-        .then(() => res.json('Item added successfully'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    Item.findOne(newItemJSON, (err, ex) =>{
+        if (err) console.log(err);
+        if (ex){
+            res.status(400).json('Error: Duplicate item found.')
+        } else {
+            const newItem = new Item(newItemJSON)
+            newItem.save()
+                .then(() => res.json('Item added successfully'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        }
+    })
 })
 
 //Exporting router
