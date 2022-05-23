@@ -10,6 +10,7 @@ export default class CreateItem extends Component {
         this.sizeRef = createRef()
         this.statusRef = createRef()
 
+        //Initializing default values
         this.state = {
             name: '',
             description: '',
@@ -68,18 +69,19 @@ export default class CreateItem extends Component {
         })
     }
 
+    //Overwrites default onSubmit method
     onSubmit(e) {
         e.preventDefault();
-
+        //Creating the item JSON to be passed in the POST Method
         const item = {
             name: this.state.name,
             description: this.state.description,
             quantity: Number.parseInt(this.state.quantity),
-            weight: Number.parseInt(this.state.weight),
+            weight: Number.parseFloat(this.state.weight).toFixed(2),
             size: this.state.size,
             status: this.state.status,
         }
-
+        //Adding item with POST Method
         axios.post('items/add', item)
             .then(res => {
                 console.log(res.data)

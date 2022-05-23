@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../axiosinstance';
 
+//Constructing the Item prop
 const Item = props => (
     <tr>
         <td>{props.item.name}</td>
@@ -36,6 +37,7 @@ export default class ItemsList extends Component {
             })
     }
 
+    //Delete Item handler
     deleteItem(id) {
         axios.delete('items/'+id)
             .then(res => { console.log(res.data)});
@@ -43,6 +45,7 @@ export default class ItemsList extends Component {
         window.location = '/'
     }
 
+    //Displays all the items present in state.items
     itemList() {
         return this.state.items.map(item => {
             return <Item item={item} deleteItem={this.deleteItem} key={item._id}/>;

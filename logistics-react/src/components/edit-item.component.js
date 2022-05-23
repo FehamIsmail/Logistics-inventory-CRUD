@@ -4,17 +4,21 @@ import axios from "../axiosinstance";
 import {useForm} from "react-hook-form";
 
 export default function EditItem(){
+    //Retrieves id from URL
     const { id } = useParams();
+    //Initializing item and item's components used in the form
     const [item, setItem] = useState({});
-    const {register, handleSubmit} = useForm();
+    const {register, reset, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
+        //Deletes all object keys that has no value, i.e === ''
         for (let variable in data) {
             if (data[variable] === '') {
                 delete data[variable];
             }
         }
         console.log(data)
+        //Updates the item
         axios.put('items/'+ id, data)
             .then(res => {
                 console.log(res.data)
@@ -28,20 +32,16 @@ export default function EditItem(){
     React.useEffect(() => {
         axios.get('items/' + id)
             .then(res => {
+                //Sets the item with the requested item
                 setItem(res.data)
-                const sizeSelectBox = document.getElementsByTagName('select')[0]
-                const statusSelectBox = document.getElementsByTagName('select')[1]
-                for (let i = 0; i < sizeSelectBox.options.length; i++) {
-                    if (sizeSelectBox.options[i].value === item.size) sizeSelectBox.options[i].selected = true
-                }
-                for (let i = 0; i < statusSelectBox.options.length; i++) {
-                    if (statusSelectBox.options[i].value === item.status) statusSelectBox.options[i].selected = true
-                }
-            }).catch(err => {
+                //Updates the item, this is used to change the defaultValues of the form
+                reset(res.data)
+            })
+            .catch(err => {
                 console.log(err)
             })
 
-    }, [id, item.size, item.status])
+    }, [id, reset])
 
     return (
         <div>
@@ -74,7 +74,7 @@ export default function EditItem(){
                 <div className="form-group mb-3">
                     <label>Size: </label>
                     <select className="form-control" id="size-box"
-                             {...register('size')}
+                             {...register('size')} defaultValue={item.size}
                         >
                         <option value="Extra Small">Extra Small</option>
                         <option value="Small">Small</option>
@@ -86,7 +86,7 @@ export default function EditItem(){
                 <div className="form-group mb-3">
                     <label>Status: </label>
                     <select className="form-control" id="size-box"
-                              {...register('status')}
+                              {...register('status')} defaultValue={item.status}
                         >
                         <option value="Order Filed">Order Filed</option>
                         <option value="In Transit">In Transit</option>

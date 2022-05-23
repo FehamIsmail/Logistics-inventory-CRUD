@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+//Root path for all pages
 root.render(
     <BrowserRouter>
         <Routes>
