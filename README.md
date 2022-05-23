@@ -28,3 +28,6 @@ Deleting an item is easier than editing. All there is to do is to click on the d
 
 Using the API server with NodeJS, we can send request to mongoose Atlas database. Mongoose is a very straightforward and user-friendly database-type dependency. Using Mongoose, one can send many different type of files. For this project, the Schema object is used to store the items. Schemas are very similar to JSON objects and Mongoose provides many different methods in Schemas, such as: find() (returns all instances of the Schema object present in the database), findById() (returns Schema object by id), findOne (find the first instance of a Schema object given object's parameters), and so on. Requests to the Mongoose database use a custom 'API Key,' which is provided by them and stored in the host's environment variables.
 
+<h2>API Key</h2>
+If you wish to use your own Mongoose API Key, it is recommanded to change it in the .env_sample file. Once this is done, make sure to rename the file to .env.
+
