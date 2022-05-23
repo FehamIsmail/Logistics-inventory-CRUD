@@ -61,6 +61,7 @@ export default class ItemsList extends Component {
                         <th>Description</th>
                         <th>Quantity</th>
                         <th>Weight</th>
+                        <th>Size</th>
                         <th>Status</th>
                     </tr>
                     </thead>
