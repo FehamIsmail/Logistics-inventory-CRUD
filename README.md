@@ -2,6 +2,8 @@
 
 <h4>Logistics Inventory Tracker is a simple-to-use web application to keep track on different items stored in a database.</h4>
 
+<h5>Replit repository:</h5> https://replit.com/@FehamIsmail/Logistics-inventory-CRUD#.replit 
+
 <h1>Create an item</h1>
 
 To create an item simply click on 'Create item' location on top in the navigation bar. Then fill out the form to create an item. Make sure all fields are written with the exception of 'Description.' Make sure to respect the requirements or else the item will not be created successfully.
